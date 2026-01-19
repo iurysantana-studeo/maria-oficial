@@ -17,7 +17,7 @@
   <!-- Preload do LCP (Largest Contentful Paint) - Otimizado para Mobile -->
   <link rel="preload" as="image" href="/assets/images/hero-bundle.webp" fetchpriority="high" imagesizes="100vw">
 
-  <!-- CSS Crítico Inline (ATF) + Font Face -->
+  <!-- CSS Otimizado (Crítico e Secundário Inline) -->
   <style>
     @font-face {
       font-family: 'Poppins';
@@ -45,8 +45,12 @@
 
     :root {
       --bg-dark: #1d1d1d;
-      --text-white: #ffffff;
+      --bg-deep: #0a0a0a;
+      --bg-pure: #000000;
       --accent-gold: #facc15;
+      --accent-red: #ff3b3b;
+      --success-green: #2dd461;
+      --text-white: #ffffff;
     }
 
     body {
@@ -56,6 +60,7 @@
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     .initial-load-bg {
@@ -95,31 +100,100 @@
       object-fit: cover;
     }
 
+    @keyframes marquee {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    .animate-marquee {
+      display: flex !important;
+      width: max-content !important;
+      animation: marquee 40s linear infinite;
+      will-change: transform;
+      min-height: 250px;
+    }
+
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes pulse-button {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.03);
+      }
+    }
+
+    .animate-pulse-button {
+      animation: pulse-button 2s ease-in-out infinite;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .animate-marquee>div {
+      min-width: 100%;
+    }
+
     @media (min-width: 768px) {
       .title-critical {
         font-size: 3rem;
+      }
+
+      .animate-marquee {
+        min-height: 350px;
       }
     }
 
     #root:not(:empty) .header-critical {
       display: none;
     }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444;
+    }
   </style>
 
-  <!-- Tailwind Local -->
+  <!-- Tailwind Local (CSS Otimizado) -->
   <link rel="stylesheet" href="/tailwind.css">
 
-  <!-- CSS Secundário (Não bloqueante) -->
-  <link rel="stylesheet" href="/style.css" media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet" href="/style.css">
-  </noscript>
-
-  <!-- FontAwesome (Assíncrono) -->
+  <!-- FontAwesome (Assíncrono com Swap) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print"
-    onload="this.media='all'">
+    onload="this.media='all'; this.style.fontDisplay='swap'">
 
-  <link rel="stylesheet" href="/index.css">
   <script type="module" crossorigin src="/assets/index-C3VkibzW.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/react-vendor-DNbKzdmZ.js">
 </head>
